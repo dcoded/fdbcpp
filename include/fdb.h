@@ -18,7 +18,8 @@
 #ifndef INCLUDE_FDB_H
 #define INCLUDE_FDB_H
 
-#include <fdb/fdb.h>
+#define FDB_API_VERSION 200
+#include <foundationdb/fdb_c.h>
 
 #include <fdb/internal/future.h>
 #include <fdb/internal/cluster.h>
