@@ -12,9 +12,6 @@ namespace fdb {
     };
 
     void del::execute (fdb::key key) {
-        
-        //void fdb_transaction_clear(FDBTransaction* transaction, uint8_t const* key_name, int key_name_length)
-
         fdb_transaction_clear (tx_, key, key.size ());
     }
 }
