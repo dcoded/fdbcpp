@@ -22,6 +22,7 @@ namespace fdb {
         int offset_;
 
     public:
+        key ();
         key (const key& rhs);
 
         key (const char* key_id, key_selector sel = key_selector::FIRST_GREATER_THAN_OR_EQUAL);
@@ -34,6 +35,7 @@ namespace fdb {
         const int offset () const;
     };
 
+    key::key () : data () {}
     key::key (const key& rhs)
     : data (rhs) {
         equal_  = rhs.equal_;

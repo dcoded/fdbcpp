@@ -41,16 +41,18 @@ namespace fdb {
             throw fdb::exception (error);
         }
 
-        fdb_future_destroy (future);
-
         std::map <fdb::key, fdb::data> kv_map;
 
+        fdb::key key;
+        fdb::data value;
         for (int i = 0; i < length; i++) {
-            fdb::key key (results[i].key, results[i].key_length);
-            fdb::data value (results[i].value, results[i].value_length);
+            key = {results[i].key, results[i].key_length};
+            value = {results[i].value, results[i].value_length};
 
             kv_map[key] = value;
         }
+
+        fdb_future_destroy (future);
 
         return kv_map;
     }
