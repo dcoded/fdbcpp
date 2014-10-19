@@ -1,10 +1,21 @@
+/**
+ * @file fdb/transactional/get_range.h
+ * 
+ * Bulk get operation on a FoundationDB database.
+ */
 #pragma once
 #ifndef INCLUDE_FDB_TRANSACTIONAL_GETRANGE_H
 #define INCLUDE_FDB_TRANSACTIONAL_GETRANGE_H
 
 #include <map>
 
+/** @namespace fdb */
 namespace fdb {
+
+/** @namespace op */
+namespace op  {
+
+    /** Get Range operation returns a map of (key,value) from key range */
     class get_range : public transactional </* return */ std::map<fdb::key, fdb::data>,
     /* arg types */ fdb::key, fdb::key, size_t, bool> {
     private:
@@ -48,7 +59,7 @@ namespace fdb {
 
         return kv_map;
     }
-}
+}}
 
 
 #endif

@@ -7,7 +7,10 @@
 #include <iterator>
 #include <vector>
 
+/** @namespace fdb */
 namespace fdb {
+
+    /** FoundationDB Transaction */
     class transaction {
     friend class database;
     private:
@@ -16,10 +19,26 @@ namespace fdb {
     protected:
         explicit transaction (FDBDatabase* db);
     public:
-        int64_t commit ();
-        void    await (async_wait_enabled* t);
+        void await (async_wait_enabled* t);
 
+        /** @name Commit Operations */ 
+        //@{
+        /**
+         * Commits all transactional operations.
+         * 
+         * FoundationDB will perform an all-or-nothing commit of operations as
+         * per ACID requirements.  If a commit is successful then the operation
+         * was commited to disk.
+         * 
+         * If only read operations are performed or can be simplifed to only
+         * read operations then the version ID returned is -1
+         * 
+         * @return commit version ID
+         */
         int64_t operator() ();
+        int64_t commit ();
+        //@}
+
         operator fdb::internal::transaction& ();
     };
 

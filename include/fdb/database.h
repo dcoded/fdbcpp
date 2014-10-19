@@ -5,15 +5,28 @@
 #include "data.h"
 #include "transaction.h"
 
+/** @namespace fdb */
 namespace fdb {
 
+    /** FoundationDB Database */
     class database {
     private:
         fdb::internal::database instance;
         operator fdb::internal::database () const;
     public:
-        explicit database (const cluster& cluster, fdb::data = "DB");
+        /**
+         * Instantiate a database instance in a given cluster.
+         * 
+         * @param cluster fdb::cluster instance
+         * @param db_name name of the database (FoundationDB currently only allows "DB" as a valid name)
+         */
+        explicit database (const cluster& cluster, fdb::data db_name = "DB");
 
+        /**
+         * Create a new transaction on this database
+         * 
+         * @return a new transaction object
+         */
         transaction transaction () const;
     };
 

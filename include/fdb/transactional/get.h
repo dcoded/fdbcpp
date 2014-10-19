@@ -1,10 +1,21 @@
+/**
+ * @file fdb/transactional/get.h
+ * 
+ * Get operation on a FoundationDB database.
+ */
 #pragma once
 #ifndef INCLUDE_FDB_TRANSACTIONAL_GET_H
 #define INCLUDE_FDB_TRANSACTIONAL_GET_H
 
 #include "../key.h"
 
+/** @namespace fdb */
 namespace fdb {
+
+/** @namespace op */
+namespace op  {
+
+    /** Get operation returns a value from key (if exists) */
     class get : public transactional </* return */ fdb::data, /* arg types */ fdb::key> {
     public: 
         using transactional::transactional;
@@ -26,7 +37,7 @@ namespace fdb {
 
         return fdb::data (value, length);
     }
-}
+}}
 
 
 #endif

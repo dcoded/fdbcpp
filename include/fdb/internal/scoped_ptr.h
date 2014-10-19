@@ -1,7 +1,16 @@
+/**
+ * @file fdb/internal/scoped_ptr.h
+ * 
+ * A scoped RAII pointer to manage memory of dynamically allocated pointers.
+ */
+#pragma once
 #ifndef INCLUDE_FDB_INTERNAL_PTR_SCOPEDPTR_H
 #define INCLUDE_FDB_INTERNAL_PTR_SCOPEDPTR_H
 
+/** @namespace fdb */
 namespace fdb {
+
+/** @namespace internal */
 namespace internal {
 
     template <class T>
