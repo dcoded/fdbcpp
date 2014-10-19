@@ -18,15 +18,15 @@ namespace fdb {
     };
 
     database::database (const cluster& cluster, std::string db_name) {
-        fdb_error_t error;
-        FDBFuture* future;
 
+        FDBFuture* future;
         future = fdb_cluster_create_database (cluster,
             reinterpret_cast<const uint8_t*>(db_name.c_str()),
             db_name.size ()
         );
 
-        error  = fdb_future_block_until_ready (future);
+        fdb_error_t error;
+        error = fdb_future_block_until_ready (future);
 
         if (error != 0) {
             fdb_future_destroy (future);

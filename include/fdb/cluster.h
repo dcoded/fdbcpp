@@ -19,11 +19,11 @@ namespace fdb {
 
     cluster::cluster (const char* filepath)
     {
-        fdb_error_t error;
         FDBFuture* future;
-
         future = fdb_create_cluster (filepath);
-        error  = fdb_future_block_until_ready (future);
+
+        fdb_error_t error;
+        error = fdb_future_block_until_ready (future);
 
         if (error != 0) {
             fdb_future_destroy (future);

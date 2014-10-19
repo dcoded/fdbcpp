@@ -31,8 +31,8 @@ namespace fdb {
 
 
     network::network (int api_version) {
-        fdb_error_t error;
 
+        fdb_error_t error;
         if ((error = fdb_select_api_version (api_version)) != 0)
             throw fdb::exception (error);
 
@@ -48,7 +48,6 @@ namespace fdb {
 
 
     std::future<fdb_error_t> network::stop () const {
-        // future : std::future<fdb_error_t>
         return std::async (std::launch::async, fdb_stop_network);
     }
 

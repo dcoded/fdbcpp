@@ -26,7 +26,6 @@ namespace fdb {
 
     transaction::transaction (FDBDatabase* db) {
         fdb_error_t error;
-
         if ((error = fdb_database_create_transaction (db, &instance)) != 0)
             throw new fdb::exception (error);
     }
@@ -41,15 +40,14 @@ namespace fdb {
     }
 
     int64_t transaction::commit () {
-        fdb_error_t error;
-        FDBFuture*  future;
-        int64_t version;
 
         for (auto task : tasks)
             task->wait ();
 
+        FDBFuture* future;
         future = fdb_transaction_commit (instance);
 
+        fdb_error_t error;
         if ((error = fdb_future_block_until_ready(future)) != 0) {
             fdb_future_destroy (future);
             throw fdb::exception (error);
@@ -57,6 +55,7 @@ namespace fdb {
 
         fdb_future_destroy (future);
 
+        int64_t version;
         if ((error = fdb_transaction_get_committed_version(instance, &version)) != 0)
             throw fdb::exception (error);
 
