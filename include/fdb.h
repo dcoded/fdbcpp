@@ -1,3 +1,9 @@
+// $Id$
+/**
+ * @file fdb.h
+ * Main header file used and included by client applications.
+ */
+// $Log$
 #pragma once
 #ifndef INCLUDE_FDB_H
 #define INCLUDE_FDB_H
