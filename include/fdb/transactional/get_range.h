@@ -20,7 +20,8 @@ namespace fdb {
 
     std::map<fdb::key, fdb::data> get_range::execute (fdb::key begin, fdb::key end, size_t limit, bool reverse) {
 
-        FDBFuture* future = fdb_transaction_get_range (tx_,
+        fdb::internal::future future;
+        future = fdb_transaction_get_range (tx_,
             begin, begin.size (), begin.equal (), begin.offset (),
             end  , end.size ()  , end.equal ()  , end.offset (),
 
@@ -28,22 +29,15 @@ namespace fdb {
         );
 
         fdb_error_t error;
-        if ((error = fdb_future_block_until_ready(future)) != 0) {
-            fdb_future_destroy (future);
-            throw fdb::exception (error);
-        }
-
         int length;
         fdb_bool_t more;
-        if ((error = fdb_future_get_keyvalue_array (future, &results, &length, &more)) != 0) {
-            fdb_future_destroy (future);
+        if ((error = fdb_future_get_keyvalue_array (future, &results, &length, &more)) != 0)
             throw fdb::exception (error);
-        }
 
         fdb::key key;
         fdb::data value;
         std::map <fdb::key, fdb::data> kv_map;
-        
+
         for (int i = 0; i < length; i++) {
 
             key   = {results[i].key, results[i].key_length};
@@ -51,8 +45,6 @@ namespace fdb {
 
             kv_map[key] = value;
         }
-
-        fdb_future_destroy (future);
 
         return kv_map;
     }

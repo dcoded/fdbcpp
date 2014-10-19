@@ -54,7 +54,8 @@ namespace fdb {
     }
 
     data::operator std::string () const {
-        return std::string (reinterpret_cast<const char*>(data_), size_);
+        const char* str = reinterpret_cast<const char*>(data_);
+        return std::string (str, size_);
     }
 
     bool data::operator< (const data &b) const {

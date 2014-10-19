@@ -13,24 +13,16 @@ namespace fdb {
 
     fdb::data get::execute (fdb::key key) {
         
-        FDBFuture* future;
+        fdb::internal::future future;
         future = fdb_transaction_get (tx_, key, key.size (), false);
 
         fdb_error_t error;
-        if ((error = fdb_future_block_until_ready(future)) != 0) {
-            fdb_future_destroy (future);
-            throw fdb::exception (error);
-        }
 
         int length;
 		fdb_bool_t exists;
         const uint8_t* value;
-        if ((error = fdb_future_get_value (future, &exists, &value, &length)) != 0) {
-            fdb_future_destroy (future);
+        if ((error = fdb_future_get_value (future, &exists, &value, &length)) != 0)
             throw fdb::exception (error);
-        }
-
-        fdb_future_destroy (future);
 
         return fdb::data (value, length);
     }

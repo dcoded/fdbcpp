@@ -12,11 +12,11 @@ namespace fdb {
     protected:
         std::future<ReturnType>* future_;
         transaction&    tr_;
-        FDBTransaction* tx_;
+        fdb::internal::transaction& tx_;
     public:
         transactional (transaction& tx)
         : tr_ (tx)
-        , tx_ (tx.get ()) {}
+        , tx_ (tx) {}
 
         std::future<ReturnType> operator() (Arguments...args) {
             tr_.await (this);

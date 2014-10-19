@@ -4,6 +4,11 @@
 
 #include <fdb/fdb.h>
 
+#include <fdb/internal/future.h>
+#include <fdb/internal/cluster.h>
+#include <fdb/internal/database.h>
+#include <fdb/internal/transaction.h>
+
 #include <fdb/network.h>
 #include <fdb/cluster.h>
 #include <fdb/database.h>
