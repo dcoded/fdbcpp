@@ -7,36 +7,36 @@
 
 namespace fdb {
 
-	template <typename ReturnType, typename... Arguments>
-	class transactional : public async_wait_enabled {
-	protected:
-		std::future<ReturnType>* future_;
-		transaction&    tr_;
-		FDBTransaction* tx_;
-	public:
-		transactional (transaction& tx)
-		: tr_ (tx)
-		, tx_ (tx.get ()) {}
+    template <typename ReturnType, typename... Arguments>
+    class transactional : public async_wait_enabled {
+    protected:
+        std::future<ReturnType>* future_;
+        transaction&    tr_;
+        FDBTransaction* tx_;
+    public:
+        transactional (transaction& tx)
+        : tr_ (tx)
+        , tx_ (tx.get ()) {}
 
-		std::future<ReturnType> operator() (Arguments...args) {
-			tr_.await (this);
-			
-			std::future<ReturnType> f = std::async (
-				std::launch::deferred,
-				&transactional::execute,
-				this, args...
-			);
+        std::future<ReturnType> operator() (Arguments...args) {
+            tr_.await (this);
+            
+            std::future<ReturnType> f = std::async (
+                std::launch::deferred,
+                &transactional::execute,
+                this, args...
+            );
 
-			future_ = &f;
-			return f;
-		}
+            future_ = &f;
+            return f;
+        }
 
-		void wait () {
-			future_->wait ();
-		}
+        void wait () {
+            future_->wait ();
+        }
 
-	protected:
-		virtual ReturnType execute (Arguments...args) = 0;
-	};
+    protected:
+        virtual ReturnType execute (Arguments...args) = 0;
+    };
 }
 #endif

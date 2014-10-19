@@ -6,7 +6,7 @@ namespace fdb {
 
 class async_wait_enabled {
 public:
-	virtual void wait () = 0;
+    virtual void wait () = 0;
 };
 
 }
