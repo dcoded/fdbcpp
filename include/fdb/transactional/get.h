@@ -19,7 +19,7 @@ namespace fdb {
         fdb_error_t error;
 
         int length;
-		fdb_bool_t exists;
+        fdb_bool_t exists;
         const uint8_t* value;
         if ((error = fdb_future_get_value (future, &exists, &value, &length)) != 0)
             throw fdb::exception (error);
