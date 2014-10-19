@@ -6,15 +6,15 @@
 
 namespace fdb {
 namespace internal {
-	class transaction : public virtual scoped_ptr <FDBTransaction> {
-	public:
-		virtual ~transaction ();
-		using scoped_ptr<FDBTransaction>::operator=;
-	};
+    class transaction : public virtual scoped_ptr <FDBTransaction> {
+    public:
+        virtual ~transaction ();
+        using scoped_ptr<FDBTransaction>::operator=;
+    };
 
-	transaction::~transaction () {
+    transaction::~transaction () {
         if (ptr_ != nullptr)
             fdb_transaction_destroy (ptr_);
-	}
+    }
 }}
 #endif

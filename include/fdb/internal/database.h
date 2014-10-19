@@ -6,15 +6,15 @@
 
 namespace fdb {
 namespace internal {
-	class database : public virtual scoped_ptr <FDBDatabase> {
-	public:
-		virtual ~database ();
-		using scoped_ptr<FDBDatabase>::operator=;
-	};
+    class database : public virtual scoped_ptr <FDBDatabase> {
+    public:
+        virtual ~database ();
+        using scoped_ptr<FDBDatabase>::operator=;
+    };
 
-	database::~database () {
-		if (ptr_ != nullptr)
-			fdb_database_destroy (ptr_);
-	}
+    database::~database () {
+        if (ptr_ != nullptr)
+            fdb_database_destroy (ptr_);
+    }
 }}
 #endif
