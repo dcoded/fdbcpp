@@ -23,10 +23,10 @@ namespace op  {
         /**
          * Execute deletion of key in transaction.
          */
-        virtual void execute (fdb::key key);
+        virtual void execute (const fdb::key& key);
     };
 
-    void del::execute (fdb::key key) {
+    void del::execute (const fdb::key& key) {
         fdb_transaction_clear (tx_, key, key.size ());
     }
 }}

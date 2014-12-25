@@ -21,7 +21,7 @@ namespace fdb {
     class transactional : public async_wait_enabled {
     protected:
         std::future<ReturnType>* future_;
-        transaction&    tr_;
+        transaction& tr_;
         fdb::internal::transaction& tx_;
     public:
 
@@ -45,14 +45,14 @@ namespace fdb {
         std::future<ReturnType> operator() (Arguments...args) {
             tr_.await (this);
             
-            std::future<ReturnType> f = std::async (
+            std::future<ReturnType> future = std::async (
                 std::launch::deferred,
                 &transactional::execute,
                 this, args...
             );
 
-            future_ = &f;
-            return f;
+            future_ = &future;
+            return future;
         }
 
         /**
@@ -65,7 +65,7 @@ namespace fdb {
         }
 
     protected:
-        virtual ReturnType execute (Arguments...args) = 0;
+        virtual ReturnType execute (const Arguments&...args) = 0;
     };
 }
 #endif

@@ -24,12 +24,12 @@ namespace op  {
         using transactional::transactional;
 
         virtual std::map<fdb::key, fdb::data> execute (
-            fdb::key begin, fdb::key end,
-            size_t limit, bool reverse
+            const fdb::key& begin, const fdb::key& end,
+            const size_t& limit, const bool& reverse
         );
     };
 
-    std::map<fdb::key, fdb::data> get_range::execute (fdb::key begin, fdb::key end, size_t limit, bool reverse) {
+    std::map<fdb::key, fdb::data> get_range::execute (const fdb::key& begin, const fdb::key& end, const size_t& limit, const bool& reverse) {
 
         fdb::internal::future future;
         future = fdb_transaction_get_range (tx_,

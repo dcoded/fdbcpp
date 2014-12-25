@@ -1,12 +1,12 @@
 #ifndef INCLUDE_FDB_DATA_H
 #define INCLUDE_FDB_DATA_H  
+#include <vector>
 
 namespace fdb {
 
     class data {
     private:
-        const uint8_t* data_;
-        int size_;
+        std::string data_;
     public:
         data ();
 
@@ -97,41 +97,33 @@ namespace fdb {
 
     data::data () {}
 
-    data::data (const data& rhs) {
-        data_ = rhs.data_;
-        size_ = rhs.size_;
-    }
+    data::data (const data& rhs)
+    : data_ (rhs.data_) {}
 
-    data::data (const char* key_id)
-    : data_ (reinterpret_cast <const uint8_t*> (key_id))
-    , size_ (strlen (key_id))  {}
+    data::data (const char* key)
+    : data (reinterpret_cast <const void*> (key), strlen(key)) {}
 
-    data::data (std::string key_id)
-    : data_ (reinterpret_cast <const uint8_t*> (key_id.c_str ()))
-    , size_ (key_id.size ()) {}
+    data::data (std::string key) 
+    : data (reinterpret_cast <const void*> (key.c_str ()), key.size ()) {}
 
-    data::data (const uint8_t* data, int length)
-    : data_ (data)
-    , size_ (length) {}
+    data::data (const uint8_t* key, int length)
+    : data_ (std::string (key, key + length)) {}
 
-    data::data (const void* const data, int length)
-    : data_ (reinterpret_cast<const uint8_t*> (data))
-    , size_ (length) {}
+    data::data (const void* key, int length)
+    : data (reinterpret_cast <const uint8_t*> (key), length) {}
 
-    const int data::size () const { return size_; }
+    const int data::size () const { return data_.size (); }
 
     data::operator const uint8_t* () const {
-        return data_;
+        return reinterpret_cast<const uint8_t*> (data_.c_str ());
     }
 
     data::operator std::string () const {
-        const char* str = reinterpret_cast<const char*>(data_);
-        return std::string (str, size_);
+        return data_;
     }
 
     bool data::operator< (const data &b) const {
-        return (std::string (reinterpret_cast<const char*>(data_), size_) <
-            std::string (reinterpret_cast<const char*>(b.data_), b.size_));
+        return (static_cast <std::string> (*this) < static_cast <std::string> (b));
     }
 }
 

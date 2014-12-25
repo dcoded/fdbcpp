@@ -23,7 +23,7 @@ namespace op  {
     public: 
         using transactional::transactional;
 
-        virtual void execute (fdb::key key, fdb::data val) {
+        virtual void execute (const fdb::key& key, const fdb::data& val) {
             fdb_transaction_set (tx_, key, key.size (), val, val.size ());
         }
     };

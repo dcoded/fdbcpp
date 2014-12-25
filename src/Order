@@ -1,0 +1,16 @@
+Order
+  int idNumber;
+  bool buyOrSell;
+  int shares;
+  int limit;
+  int entryTime;
+  int eventTime;
+  Order *nextOrder;
+  Order *prevOrder;
+  Limit *parentLimit;
+
+
+buy:<price>:<timestamp>:<uuid> -> <order_id>
+
+
+order:<order_id>:filter:<filter_name> -> <filter_criteria>

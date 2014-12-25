@@ -19,10 +19,10 @@ namespace op  {
     class get : public transactional </* return */ fdb::data, /* arg types */ fdb::key> {
     public: 
         using transactional::transactional;
-        virtual fdb::data execute (fdb::key key);
+        virtual fdb::data execute (const fdb::key& key);
     };
 
-    fdb::data get::execute (fdb::key key) {
+    fdb::data get::execute (const fdb::key& key) {
         
         fdb::internal::future future;
         future = fdb_transaction_get (tx_, key, key.size (), false);
@@ -32,6 +32,7 @@ namespace op  {
         int length;
         fdb_bool_t exists;
         const uint8_t* value;
+        
         if ((error = fdb_future_get_value (future, &exists, &value, &length)) != 0)
             throw fdb::exception (error);
 
