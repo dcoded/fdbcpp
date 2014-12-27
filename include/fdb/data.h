@@ -7,6 +7,7 @@ namespace fdb {
     class data {
     private:
         std::string data_;
+        bool valid_;
     public:
         data ();
 
@@ -93,9 +94,14 @@ namespace fdb {
          * @return true if and only if this is less than other
          */
         bool operator< (const data &other) const;
+
+
+
+        bool valid () const;
     };
 
-    data::data () {}
+    data::data ()
+    : valid_ (false) {}
 
     data::data (const data& rhs)
     : data_ (rhs.data_) {}
@@ -107,7 +113,8 @@ namespace fdb {
     : data (reinterpret_cast <const void*> (key.c_str ()), key.size ()) {}
 
     data::data (const uint8_t* key, int length)
-    : data_ (std::string (key, key + length)) {}
+    : data_ (std::string (key, key + length))
+    , valid_ (true) {}
 
     data::data (const void* key, int length)
     : data (reinterpret_cast <const uint8_t*> (key), length) {}
@@ -125,6 +132,8 @@ namespace fdb {
     bool data::operator< (const data &b) const {
         return (static_cast <std::string> (*this) < static_cast <std::string> (b));
     }
+
+    bool data::valid () const { return valid_; }
 }
 
 #endif

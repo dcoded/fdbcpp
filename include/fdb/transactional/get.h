@@ -36,7 +36,10 @@ namespace op  {
         if ((error = fdb_future_get_value (future, &exists, &value, &length)) != 0)
             throw fdb::exception (error);
 
-        return fdb::data (value, length);
+        if (!exists)
+            return fdb::data ();
+        else
+            return fdb::data (value, length);
     }
 }}
 
