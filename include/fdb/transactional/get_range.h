@@ -8,6 +8,7 @@
 #define INCLUDE_FDB_TRANSACTIONAL_GETRANGE_H
 
 #include <vector>
+#include "../transactional.h"
 
 /** @namespace fdb */
 namespace fdb {
@@ -17,7 +18,7 @@ namespace op  {
 
     /** Get Range operation returns a map of (key,value) from key range */
     class get_range : public transactional <
-    /* return */ std::vector<std::pair<fdb::key, fdb::data>>,
+    /* return    */ std::vector<std::pair<fdb::key, fdb::data>>,
     /* arg types */ fdb::key, fdb::key, size_t, bool> {
     private:
         const FDBKeyValue* results = nullptr;

@@ -8,6 +8,7 @@
 #define INCLUDE_FDB_TRANSACTIONAL_H
 
 #include "async_wait_enabled.h"
+#include "exception.h"
 
 /** @namespace fdb */
 namespace fdb {

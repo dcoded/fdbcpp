@@ -5,6 +5,10 @@
 #include <stdexcept>
 #include <future>
 #include <cassert>
+#include <string>
+
+#define FDB_API_VERSION 200
+#include <foundationdb/fdb_c.h>
 
 /** @namespace fdb */
 namespace fdb {
@@ -17,11 +21,8 @@ namespace fdb {
 	 */
     class exception : public std::runtime_error {
     public:
-        explicit exception (fdb_error_t code)
-        : std::runtime_error (fdb_get_error (code)) {}
-
-        explicit exception (const std::string what)
-        : std::runtime_error (what) {}
+        explicit exception (fdb_error_t code);
+        explicit exception (const std::string what);
     };
 }
 

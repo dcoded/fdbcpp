@@ -7,6 +7,8 @@
 #ifndef INCLUDE_FDB_TRANSACTIONAL_GET_H
 #define INCLUDE_FDB_TRANSACTIONAL_GET_H
 
+#include "../transactional.h"
+#include "../exception.h"
 #include "../key.h"
 
 /** @namespace fdb */

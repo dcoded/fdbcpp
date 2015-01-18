@@ -13,10 +13,10 @@ try
 
 	auto future6 = set (tx) ("buy:x.xx:987979:33921", "order-554541");
 	
-	auto x = set (tx) ("x", "hello test");
+	auto x = set (tx) ("x", "hello test2");
 	auto z = get (tx) ("x");
 	auto f = get_range (tx) ( "buy:\x00", "buy:\xFF", 0, true);
-	//auto d = del (tx) ("x");
+	auto d = del (tx) ("x");
 
 
 	auto ver = tx ();
